@@ -64,7 +64,7 @@ app.post('/jobs', (req, res) => {
     }
 
     // Assign a unique ID
-    newJob.id = Date.now().toString(); // or use uuid
+    newJob.id = Date.now().toString(); 
 
     // Add new job
     jobs.push(newJob);
@@ -76,8 +76,31 @@ app.post('/jobs', (req, res) => {
         return res.status(500).json({ error: 'Failed to save new job' });
       }
 
-      res.status(201).json(newJob); // Send back the newly created job with id
+      res.status(201).json(newJob); 
     });
+  });
+});
+// GET /jobs/:id (Fetch single job by ID)
+app.get('/jobs/:id', (req, res) => {
+  const jobId = req.params.id;
+  const filePath = path.join(__dirname, 'jobs.json');
+
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) return res.status(500).json({ error: 'Failed to read jobs file' });
+
+    try {
+      const parsed = JSON.parse(data);
+      const jobs = parsed.jobs || parsed; 
+
+      const job = jobs.find(j => j.id === jobId);
+      if (!job) {
+        return res.status(404).json({ error: 'Job not found' });
+      }
+
+      res.json(job);
+    } catch (parseError) {
+      res.status(500).json({ error: 'Invalid JSON format' });
+    }
   });
 });
 
@@ -98,7 +121,7 @@ app.put('/jobs/:id', (req, res) => {
         return res.status(404).json({ error: 'Job not found' });
       }
 
-      // Keep original ID intact
+
       updatedJob.id = jobId;
       jobs[index] = updatedJob;
 
