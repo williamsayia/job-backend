@@ -12,9 +12,14 @@ const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors({
-  origin: 'https://job-backend-qo34.onrender.com' 
+  origin: [
+    'http://localhost:3000', 
+    'https://job-platform-jet.vercel.app/' 
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true 
 }));
-app.use(express.json()); // Needed to parse JSON bodies
+app.use(express.json()); 
 
 // GET / (API health check)
 app.get('/', (req, res) => {
