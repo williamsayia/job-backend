@@ -14,7 +14,7 @@ const __dirname = path.dirname(__filename);
 app.use(cors({
   origin: [
     'http://localhost:3000', 
-    'https://job-platform-blue.vercel.app/' 
+    'https://job-platform-blue.vercel.app' 
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true 
