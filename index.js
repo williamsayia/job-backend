@@ -11,7 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'https://job-backend-qo34.onrender.com' 
+}));
 app.use(express.json()); // Needed to parse JSON bodies
 
 // GET / (API health check)
